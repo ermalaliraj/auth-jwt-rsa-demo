@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ea</groupId>
-	<artifactId>jwt-rsa-demo</artifactId>
+	<artifactId>auth-jwt-rsa-demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>JWT RSA demo</name>
 
