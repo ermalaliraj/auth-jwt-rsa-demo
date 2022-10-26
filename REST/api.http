@@ -1,4 +1,4 @@
-### Call API
+### Call API with no Token
 GET http://localhost:8080/
 
 ### 1. Generate JWT token using JwtTokenGenerator.test_printToken()
