@@ -34,12 +34,11 @@ public class JwtTokenGenerator {
 
     private String generateJwtToken() {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("sub", publicKey.toString());
+        claims.put("sub", publicKey.toString()); // or only the key?
 
         String token = Jwts.builder()
                 .setHeaderParam("alg", "HS256")
                 .setClaims(claims)
-//                    .setPayload("{\"sub\": " + publicKey +"}")
                 .signWith(SignatureAlgorithm.RS256, privateKey)
                 .compact();
         return token;
