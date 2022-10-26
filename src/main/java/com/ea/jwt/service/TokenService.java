@@ -16,6 +16,8 @@ public class TokenService {
 
     private final JwtEncoder jwtEncoder;
 
+    public static final int TOKEN_EXPIRE_IN_MIN = 5*60;
+
     public TokenService(JwtEncoder jwtEncoder) {
         this.jwtEncoder = jwtEncoder;
     }
@@ -28,7 +30,7 @@ public class TokenService {
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
-                .expiresAt(now.plus(1, ChronoUnit.HOURS))
+                .expiresAt(now.plus(TOKEN_EXPIRE_IN_MIN, ChronoUnit.MINUTES))
                 .subject(authentication.getName())
                 .claim("scope", scope)
                 .build();

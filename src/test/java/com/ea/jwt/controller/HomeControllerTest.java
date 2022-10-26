@@ -1,7 +1,9 @@
 package com.ea.jwt.controller;
 
 import com.ea.jwt.config.SecurityConfig;
+import com.ea.jwt.dto.JsonTokenResponse;
 import com.ea.jwt.service.TokenService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -10,6 +12,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -36,9 +39,13 @@ public class HomeControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        String token = result.getResponse().getContentAsString();
+        String response = result.getResponse().getContentAsString();
+        JsonTokenResponse tokenResponse = new ObjectMapper()
+                .disable(FAIL_ON_UNKNOWN_PROPERTIES)
+                .readValue(response, JsonTokenResponse.class);
+
         mockMvc.perform(get("/")
-                            .header("Authorization", "Bearer " + token ))
+                            .header("Authorization", "Bearer " + tokenResponse.getAccessToken() ))
             .andExpect(content().string("Hello JWT! User: ermal"));
 
     }
