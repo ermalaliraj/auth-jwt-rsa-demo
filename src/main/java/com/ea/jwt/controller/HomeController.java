@@ -9,8 +9,13 @@ import java.security.Principal;
 public class HomeController {
 
     @GetMapping
-    public String home(Principal principal) {
-        return "Hello JWT! User: " + principal.getName();
+    public String home() {
+        return "Hello JWT!";
+    }
+
+    @GetMapping("/details")
+    public String details(Principal principal) {
+        return "principal: " + principal + " \nprincipal.getName(): " + principal.getName();
     }
 
 }
